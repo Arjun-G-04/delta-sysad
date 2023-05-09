@@ -14,7 +14,7 @@ else
     
     #read -p "Enter the Student Details file name: " file
     file="studentDetails.txt"
-
+    # test from ubuntu
     mylist="apple banana orange"
     echo ${mylist[1]}
 
