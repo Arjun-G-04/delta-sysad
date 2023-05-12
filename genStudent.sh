@@ -1,29 +1,31 @@
 #!/bin/bash
 
-#IFS=':' is the field separator
-#Name RollNumber Hostel Room Mess MessPref
+#Alias genStudent in .bashrc runs this file
 
-clear
+# Create HAD user and home directory
+useradd HAD
+mkdir /home/HAD
+chown HAD /home/HAD
+echo -e "[x] Created HAD user and home directory\n"
 
-if [ -d "./HAD" ]
-then
-    echo "Everything is already setup!"
-    read -p "Press any key to go back to home...." any
-    ./main.sh
-else
-    
-    #read -p "Enter the Student Details file name: " file
-    file="studentDetails.txt"
-    # test from ubuntu
-    mylist="apple banana orange"
-    echo ${mylist[1]}
+# Student details file input
+read -p 'Enter file path: ' filePath
 
-
-    #Name Rollno Hostel Room Mess
-    #while read line
-    #do
-    #    echo "${line[2]}"
-    #done < ./$file
-
-
-fi
+# Create Hostel home directories
+echo -e "\nCreating Hostels home directories............"
+while read line
+do
+    read -a studentData <<< "$line"
+    hostel=${studentData[2]}
+    if [ -d "/home/$hostel" ]; 
+    then
+        echo "$hostel already present"
+    else
+        useradd $hostel
+        mkdir /home/$hostel
+        chown $hostel /home/$hostel
+        touch /home/$hostel/announcements.txt
+        touch /home/$hostel/feeDefaulters.txt
+        echo "[x] Created $hostel user and home directory"
+    fi
+done < $filePath
