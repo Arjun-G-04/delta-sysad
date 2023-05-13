@@ -45,7 +45,7 @@ do
     roomno=${studentData[3]}
     mess=${studentData[4]}
     dept=${depts[$((RANDOM % 9))]}
-    if [ -d "/home/$hostel/$roomno/$rollno" ]; 
+    if [ -d "/home/$hostel/$roomno/$name" ]; 
     then
         echo "$name already present"
     else
