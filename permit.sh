@@ -23,6 +23,18 @@ do
     fi
 done < $filePath
 
+#Assigning group members
+while read line
+do
+    read -a studentData <<< "$line"
+    name=${studentData[0]}
+    hostel=${studentData[2]}
+
+    usermod -aG allStudents $name
+    usermod -aG HAD$hostel $hostel
+    usermod -aG HAD$hostel HAD
+done < $filePath
+
 #Change owners
 chown -R HAD:allStudents /home/HAD
 
