@@ -36,7 +36,7 @@ do
 done < $filePath
 
 #Change owners
-chown -R HAD:allStudents /home/HAD
+chown -R HAD:allStudents /home/HAD/mess.txt
 
 while read line
 do
@@ -76,7 +76,7 @@ do
     name=${studentData[0]}
     hostel=${studentData[2]}
     roomno=${studentData[3]}
-    chmod -R 470 /home/$hostel/$roomno/$name
+    chmod -R 770 /home/$hostel/$roomno/$name
 done < $filePath
 
 echo "Updated permissions!"
