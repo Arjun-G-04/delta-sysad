@@ -45,15 +45,10 @@ do
     roomno=${studentData[3]}
     mess=${studentData[4]}
     dept=${depts[$((RANDOM % 9))]}
-    if [ -d "/home/$hostel/$roomno/$name" ]; 
-    then
-        echo "$name already present"
-    else
-        useradd $name
-        mkdir /home/$hostel/$roomno
-        mkdir /home/$hostel/$roomno/$name
-        echo -e "Name $name\nRollNo $rollno\nDept $dept\nYear 1\nHostel $hostel\nMess $mess\nMessPreference\n" > /home/$hostel/$roomno/$name/userDetails.txt
-        echo -e "TuitionFee 0\nHostelRent 0\nServiceCharge 0\nMessFee 0" > /home/$hostel/$roomno/$name/fees.txt
-        echo "[x] Created $name user and home directory"
-    fi
+    useradd $name
+    mkdir /home/$hostel/$roomno
+    mkdir /home/$hostel/$roomno/$name
+    echo -e "Name $name\nRollNo $rollno\nDept $dept\nYear 1\nHostel $hostel" > /home/$hostel/$roomno/$name/userDetails.txt
+    echo -e "TuitionFee 0\nHostelRent 0\nServiceCharge 0\nMessFee 0" > /home/$hostel/$roomno/$name/fees.txt
+    echo "[x] Created $name user and home directory"
 done < $filePath
