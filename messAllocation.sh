@@ -1,8 +1,11 @@
 #!/bin/bash
 
-#user=$(whoami)
-user="Agate"
+user=$(whoami)
 counts=(2 35 35)
+declare -A messCount
+messCount["1"]=2
+messCount["2"]=35
+messCount["3"]=35
 
 if id -nG $user | grep -qw "allStudents" 
 then
@@ -23,26 +26,28 @@ then
     #Update mess.txt
     echo "$rollno $user $order" >> /home/HAD/mess.txt
 else
+    #Allocation
     while read line
     do
         read -a data <<< "$line"
 
         if echo ${data[0]} | grep -q '^[0-9]*$'
         then
+            name=${data[1]}
             prefOne=${data[2]}
             prefTwo=${data[3]}
             prefThree=${data[4]}
             prefs=($prefOne $prefTwo $prefThree)
-            name=${data[1]}
-            cond=false
-            path=$(find /home -type d -name $name)
-            while true
+            for item in "${prefs[@]}"
             do
-                if [ ${counts[${prefs[0]}]} - 1 -ge 0 ]
+                if [ $((${messCount["$item"]} - 1)) -ge 0 ]
                 then
-                    #
-                
+                    path=$(find /home -type d -name $name)
+                    echo "Mess $item" >> $path/userDetails.txt
+                    messCount["$item"]=$((${messCount["$item"]} - 1))
+                    break
+                fi
+            done
         fi
-
     done < /home/HAD/mess.txt
 fi
